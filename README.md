@@ -15,7 +15,7 @@ This project is an interactive CV template built with HTML, CSS, and JavaScript.
 
 1. Clone the repository:
     ```sh
-    git clone https://github.com/yourusername/interactive-cv.git
+    git clone https://github.com/cihataydin/interactive-cv.git
     ```
 2. Open `index.html` in your web browser to view the CV.
 
