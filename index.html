@@ -1,858 +1,547 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" class="scroll-smooth">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Modern CV</title>
-    <!-- Tailwind CSS -->
+    <title>Modern CV - Adınız Soyadınız</title> <!-- BURAYI GÜNCELLE -->
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Scroll Behavior için -->
-    <style>
-        html {
-            scroll-behavior: smooth;
-        }
-        body {
-            overflow-x: hidden;
-        }
-    </style>
-    <!-- Tailwind Config -->
+    <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.12.0/tsparticles.bundle.min.js"></script>
+
     <script>
         tailwind.config = {
+            darkMode: 'class',
             theme: {
                 extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
                     animation: {
                         'gradient': 'gradient 8s linear infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
                     },
                     keyframes: {
                         gradient: {
-                            '0%, 100%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'left center'
-                            },
-                            '50%': {
-                                'background-size': '200% 200%',
-                                'background-position': 'right center'
-                            }
+                            '0%, 100%': { 'background-size': '200% 200%', 'background-position': 'left center' },
+                            '50%': { 'background-size': '200% 200%', 'background-position': 'right center' }
                         }
                     }
                 }
             }
         }
     </script>
-    <!-- Motion One kütüphanesi için -->
-    <script src="https://cdn.jsdelivr.net/npm/@motionone/types@10.16.3/dist/index.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Yetenekler ve Projeler için ortak stil düzenlemeleri -->
+
     <style>
-        .custom-slider-container {
-            padding: 0 1rem;
-        }
-        
-        @media (min-width: 768px) {
-            .custom-slider-container {
-                padding: 0 3rem;
-            }
+        body {
+            @apply font-sans bg-stone-50 text-stone-800 dark:bg-gray-900 dark:text-stone-200 transition-colors duration-300;
+            overflow-x: hidden;
         }
 
-        /* Proje kartları için responsive tasarım */
-        .project-card {
-            width: calc(100vw - 3rem);
+        .timeline-line::before {
+            content: '';
+            @apply absolute top-0 left-1/2 w-0.5 h-full bg-gradient-to-b from-emerald-300 via-lime-300 to-amber-300 dark:from-emerald-700 dark:via-lime-700 dark:to-amber-700 -translate-x-1/2;
         }
 
-        @media (min-width: 768px) {
-            .project-card {
-                width: 380px !important;
-            }
-        }
-
-        /* Slider mask efekti */
         @media (max-width: 767px) {
-            .slider-mask {
-                mask-image: none !important;
-                -webkit-mask-image: none !important;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .slider-mask {
-                mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
-                -webkit-mask-image: linear-gradient(to right, transparent, black 5%, black 95%, transparent);
+            .timeline-line::before {
+                @apply left-4;
             }
         }
     </style>
 </head>
 
-<body class="bg-gray-900 text-white">
-    <!-- Hero Section -->
-    <div class="min-h-screen relative overflow-hidden">
-        <!-- Animasyonlu arka plan gradient -->
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-600 to-purple-800 opacity-20"></div>
-        
-        <!-- Ana içerik -->
-        <div class="container mx-auto px-4 py-16">
+<body class="antialiased">
+
+    <header class="fixed top-0 right-0 p-4 z-50">
+        <button id="theme-toggle" type="button" aria-label="Toggle dark mode"
+            class="text-stone-500 dark:text-stone-400 hover:bg-stone-200 dark:hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-stone-200 dark:focus:ring-gray-700 rounded-lg text-sm p-2.5 transition-colors duration-200">
+            <svg id="theme-toggle-sun-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                    d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 5.05A1 1 0 004.343 6.465l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 0zM3 11a1 1 0 100-2H2a1 1 0 100 2h1zm7 6a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM4.95 14.95l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 111.414 1.414z"
+                    fill-rule="evenodd" clip-rule="evenodd"></path>
+            </svg>
+            <svg id="theme-toggle-moon-icon" class="w-5 h-5 hidden" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"></path>
+            </svg>
+        </button>
+    </header>
+    
+    <section id="hero"
+        class="min-h-screen relative overflow-hidden flex items-center justify-center py-20 px-4 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <!-- YENİ: Parçacık Konteyneri (Eski gradient div yerine) -->
+        <div id="particles-js" class="absolute inset-0 z-0"></div>
+    
+        <!-- Ana içerik (z-10 ile öne alınır) -->
+        <div class="relative z-10 text-center">
             <div class="flex flex-col items-center space-y-8">
-                <!-- Profil resmi -->
                 <div class="relative">
-                    <div class="w-40 h-40 rounded-full bg-gradient-to-r from-cyan-500 to-blue-500 p-1 animate-pulse">
-                        <img class="w-full h-full rounded-full object-cover" 
-                             src="profil-foto-url" 
-                             alt="Profil Fotoğrafı">
+                    <div
+                        class="w-40 h-40 md:w-48 md:h-48 rounded-full p-1 bg-gradient-to-r from-emerald-400 to-lime-500 dark:from-emerald-500 dark:to-lime-600 animate-pulse-slow shadow-lg">
+                        <img id="profile-image" class="w-full h-full rounded-full object-cover"
+                            src="https://avatars.githubusercontent.com/u/64714664?v=4" alt="Profil Fotoğrafı">
                     </div>
                 </div>
-
-                <!-- İsim ve Unvan -->
-                <div class="text-center space-y-4">
-                    <h1 class="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                        İsminiz
+                <div class="space-y-2">
+                    <h1 id="profile-name"
+                        class="text-4xl md:text-6xl font-extrabold tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-emerald-700 to-lime-700 dark:from-emerald-400 dark:to-lime-400 pb-2">
+                        İsminiz Soyisminiz
                     </h1>
-                    <p class="text-xl md:text-2xl text-gray-300">
+                    <p id="profile-title" class="text-xl md:text-2xl text-stone-600 dark:text-stone-300 font-medium">
                         Yazılım Geliştirici
                     </p>
                 </div>
-
-                <!-- Sosyal Medya Linkleri -->
-                <div class="flex space-x-6">
-                    <a href="#" class="transform hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-gray-300 hover:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                            <!-- GitHub icon -->
-                            <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.239 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0112 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+                <p id="profile-summary" class="max-w-2xl text-stone-700 dark:text-stone-300 text-base md:text-lg">
+                    Modern web teknolojileriyle kullanıcı odaklı, ölçeklenebilir ve performanslı çözümler geliştirmeye
+                    odaklanmış bir yazılım geliştiriciyim. Sürekli öğrenmeye ve yeni teknolojilere adapte olmaya hevesliyim.
+                </p>
+                <div class="flex space-x-6 pt-4">
+                    <a id="social-github" href="#" target="_blank" rel="noopener noreferrer" aria-label="GitHub Profile"
+                        class="text-stone-500 dark:text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-400 transform hover:scale-110 transition-all duration-300">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.766-1.588 8.198-6.084 8.198-11.386 0-6.627-5.373-12-12-12z" />
+                        </svg>
+                        <a id="social-linkedin" href="#" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Profile"
+                            class="text-stone-500 dark:text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-400 transform hover:scale-110 transition-all duration-300">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path
+                                    d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+                            </svg>
+                        </a>
+                    <a id="social-twitter" href="#" target="_blank" rel="noopener noreferrer" aria-label="Twitter Profile"
+                        class="text-stone-500 dark:text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-400 transform hover:scale-110 transition-all duration-300">
+                        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
                         </svg>
                     </a>
-                    <a href="#" class="transform hover:scale-110 transition-transform duration-300">
-                        <svg class="w-8 h-8 text-gray-300 hover:text-blue-400" fill="currentColor" viewBox="0 0 24 24">
-                            <!-- LinkedIn icon -->
-                            <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                        </svg>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Yetenekler Bölümü -->
-    <section class="py-20 bg-[#0B1120]">
-        <div class="container mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500 px-4">
-                Yeteneklerim
-            </h2>
-            
-            <div class="relative max-w-7xl mx-auto custom-slider-container">
-                <!-- Slider Navigation -->
-                <button onclick="slideSkills('prev')" class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 rounded-full items-center justify-center z-20 transition-all duration-300">
-                    <i class="fas fa-chevron-left text-white"></i>
-                </button>
-                <button onclick="slideSkills('next')" class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 rounded-full items-center justify-center z-10 transition-all duration-300">
-                    <i class="fas fa-chevron-right text-white"></i>
-                </button>
-
-                <!-- Slider Container -->
-                <div class="overflow-hidden slider-mask px-12">
-                    <div id="skillsSlider" class="flex gap-6 transition-transform duration-500">
-                        <!-- Yetenekler (12 adet) -->
-                        <div class="flex-none w-[280px]">
-                            <div class="group relative overflow-hidden rounded-2xl bg-[#1A2333] p-1 h-[200px] hover:shadow-lg hover:shadow-yellow-500/20 transition-all duration-300">
-                                <div class="absolute inset-0 bg-gradient-to-br from-yellow-500 to-orange-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                                <div class="relative p-6 text-center flex flex-col items-center justify-center h-full">
-                                    <i class="fab fa-js text-5xl text-yellow-400 mb-4 group-hover:scale-110 transition-transform duration-300"></i>
-                                    <h3 class="text-xl font-medium text-gray-200">JavaScript</h3>
-                                    <p class="text-gray-400 mt-2 text-sm">Web Geliştirme</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex-none w-[280px]">
-                            <div class="group relative overflow-hidden rounded-2xl bg-[#1A2333] p-1 h-[200px] hover:shadow-lg hover:shadow-purple-500/20 transition-all duration-300">
-                                <div class="absolute inset-0 bg-gradient-to-br from-purple-500 to-pink-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                                <div class="relative p-6 text-center flex flex-col items-center justify-center h-full">
-                                    <i class="fab fa-python text-5xl text-purple-400 mb-4 group-hover:scale-110 transition-transform duration-300"></i>
-                                    <h3 class="text-xl font-medium text-gray-200">Python</h3>
-                                    <p class="text-gray-400 mt-2 text-sm">Backend & AI</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex-none w-[280px]">
-                            <div class="group relative overflow-hidden rounded-2xl bg-[#1A2333] p-1 h-[200px] hover:shadow-lg hover:shadow-cyan-500/20 transition-all duration-300">
-                                <div class="absolute inset-0 bg-gradient-to-br from-cyan-500 to-blue-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                                <div class="relative p-6 text-center flex flex-col items-center justify-center h-full">
-                                    <i class="fab fa-vuejs text-5xl text-cyan-400 mb-4 group-hover:scale-110 transition-transform duration-300"></i>
-                                    <h3 class="text-xl font-medium text-gray-200">Vue.js</h3>
-                                    <p class="text-gray-400 mt-2 text-sm">Frontend Geliştirme</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="flex-none w-[280px]">
-                            <div class="group relative overflow-hidden rounded-2xl bg-[#1A2333] p-1 h-[200px] hover:shadow-lg hover:shadow-red-500/20 transition-all duration-300">
-                                <div class="absolute inset-0 bg-gradient-to-br from-red-500 to-orange-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                                <div class="relative p-6 text-center flex flex-col items-center justify-center h-full">
-                                    <i class="fab fa-angular text-5xl text-red-400 mb-4 group-hover:scale-110 transition-transform duration-300"></i>
-                                    <h3 class="text-xl font-medium text-gray-200">Angular</h3>
-                                    <p class="text-gray-400 mt-2 text-sm">Frontend Geliştirme</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Son Yetenek Kartı (8. kart) -->
-                        <div class="flex-none w-[280px]">
-                            <div class="group relative overflow-hidden rounded-2xl bg-[#1A2333] p-1 h-[200px] hover:shadow-lg hover:shadow-emerald-500/20 transition-all duration-300">
-                                <div class="absolute inset-0 bg-gradient-to-br from-emerald-500 to-teal-500 opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
-                                <div class="relative p-6 text-center flex flex-col items-center justify-center h-full">
-                                    <i class="fab fa-git-alt text-5xl text-emerald-400 mb-4 group-hover:scale-110 transition-transform duration-300"></i>
-                                    <h3 class="text-xl font-medium text-gray-200">Git</h3>
-                                    <p class="text-gray-400 mt-2 text-sm">Versiyon Kontrolü</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Deneyimler Bölümü -->
-    <section class="py-20 bg-[#0B1120]">
+    <section id="skills" class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            <h2
+                class="text-3xl md:text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-lime-600 dark:from-emerald-400 dark:to-lime-400">
+                Teknik Yeteneklerim
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
+                <div class="space-y-6">
+                    <h3 id="skills-frontend-title"
+                        class="text-xl font-semibold text-stone-800 dark:text-white border-b-2 pb-2 flex items-center gap-2">
+                        <svg id="skills-frontend-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                            </path>
+                        </svg>
+                        Frontend
+                    </h3>
+                    <div id="skills-frontend" class="grid grid-cols-1 gap-y-3">
+                        <div class="animate-pulse flex items-center space-x-3 p-3 bg-stone-200 dark:bg-gray-700 rounded-lg">
+                            <div class="w-8 h-8 bg-stone-300 dark:bg-gray-600 rounded"></div>
+                            <div class="h-4 bg-stone-300 dark:bg-gray-600 rounded w-20"></div>
+                        </div>
+                        <div class="animate-pulse flex items-center space-x-3 p-3 bg-stone-200 dark:bg-gray-700 rounded-lg">
+                            <div class="w-8 h-8 bg-stone-300 dark:bg-gray-600 rounded"></div>
+                            <div class="h-4 bg-stone-300 dark:bg-gray-600 rounded w-20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <h3 id="skills-backend-title"
+                        class="text-xl font-semibold text-stone-800 dark:text-white border-b-2 pb-2 flex items-center gap-2">
+                        <svg id="skills-backend-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01">
+                            </path>
+                        </svg>
+                        Backend
+                    </h3>
+                    <div id="skills-backend" class="grid grid-cols-1 gap-y-3">
+                        <div class="animate-pulse flex items-center space-x-3 p-3 bg-stone-200 dark:bg-gray-700 rounded-lg">
+                            <div class="w-8 h-8 bg-stone-300 dark:bg-gray-600 rounded"></div>
+                            <div class="h-4 bg-stone-300 dark:bg-gray-600 rounded w-20"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-6">
+                    <h3 id="skills-databases-others-title"
+                        class="text-xl font-semibold text-stone-800 dark:text-white border-b-2 pb-2 flex items-center gap-2">
+                        <svg id="skills-databases-others-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 7v10m16-10v10M4 13h16m-7-7h2m-2 4h2m-2 4h2M6 7h.01M6 11h.01M6 15h.01M18 7h.01M18 11h.01M18 15h.01">
+                            </path>
+                        </svg>
+                        Veritabanları & Diğer
+                    </h3>
+                    <div id="skills-databases-others" class="grid grid-cols-1 gap-y-3"></div>
+                </div>
+                <div class="space-y-6">
+                    <h3 id="skills-tools-devops-title"
+                        class="text-xl font-semibold text-stone-800 dark:text-white border-b-2 pb-2 flex items-center gap-2">
+                        <svg id="skills-tools-devops-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z">
+                            </path>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
+                            </path>
+                        </svg>
+                        Araçlar & Platformlar
+                    </h3>
+                    <div id="skills-tools-devops" class="grid grid-cols-1 gap-y-3"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experience" class="py-20 bg-white dark:bg-gray-900 transition-colors duration-300">
+        <div class="container mx-auto px-4">
+            <h2
+                class="text-3xl md:text-4xl font-bold text-center mb-16 bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-lime-600 dark:from-emerald-400 dark:to-lime-400">
                 Deneyimlerim
             </h2>
-            
-            <div class="max-w-4xl mx-auto relative">
-                <!-- Ana timeline çizgisi -->
-                <div class="absolute left-8 md:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-blue-500/20 via-purple-500/20 to-pink-500/20"></div>
-                
-                <!-- Deneyim 1 -->
-                <div class="relative flex flex-col md:flex-row group mb-24">
-                    <!-- Sol taraf (mobilde üst) -->
-                    <div class="w-full md:w-1/2 md:pr-12 mb-4 md:mb-0">
-                        <div class="md:text-right space-y-2">
-                            <div class="inline-flex items-center space-x-2 md:space-x-reverse md:flex-row-reverse">
-                                <span class="text-blue-400 font-semibold">2022 - Günümüz</span>
-                                <div class="h-px w-12 bg-gradient-to-r from-blue-500 to-transparent md:from-transparent md:to-blue-500"></div>
+            <div class="max-w-3xl mx-auto relative timeline-line">
+                <div class="animate-pulse mb-12 md:mb-16">
+                    <div class="flex flex-col md:flex-row items-start gap-4 md:gap-10">
+                        <div class="w-full md:w-5/12 space-y-2 md:text-right">
+                            <div class="h-4 bg-stone-300 dark:bg-gray-700 rounded w-1/3"></div>
+                            <div class="h-6 bg-stone-300 dark:bg-gray-700 rounded w-2/3"></div>
+                            <div class="h-5 bg-stone-300 dark:bg-gray-700 rounded w-1/2"></div>
+                        </div>
+                        <div class="w-full md:w-7/12 pl-10 md:pl-0 relative">
+                            <div class="p-6 bg-stone-200 dark:bg-gray-800 rounded-lg space-y-3">
+                                <div class="h-4 bg-stone-300 dark:bg-gray-700 rounded"></div>
+                                <div class="h-4 bg-stone-300 dark:bg-gray-700 rounded w-5/6"></div>
+                                <div class="flex gap-2 pt-1">
+                                    <div class="h-6 w-16 bg-stone-300 dark:bg-gray-700 rounded-full"></div>
+                                    <div class="h-6 w-20 bg-stone-300 dark:bg-gray-700 rounded-full"></div>
+                                </div>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-100">Kıdemli Frontend Geliştirici</h3>
-                            <p class="text-blue-400/80">XYZ Teknoloji</p>
-                        </div>
-                    </div>
-                    
-                    <!-- Timeline noktası -->
-                    <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                        <div class="w-4 h-4 rounded-full bg-blue-500 ring-4 ring-blue-500/20 group-hover:ring-blue-500/40 transition-all duration-300"></div>
-                    </div>
-                    
-                    <!-- Sağ taraf (mobilde alt) -->
-                    <div class="w-full md:w-1/2 md:pl-12 pl-16 md:pl-12">
-                        <p class="text-gray-400 leading-relaxed">
-                            Modern web uygulamaları geliştirme, ekip liderliği ve mentorluk. React, Next.js ve TypeScript ile kurumsal projeler. Performans optimizasyonu ve kod kalitesi standartlarının belirlenmesi.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="px-3 py-1 rounded-full text-sm bg-blue-500/10 text-blue-400">React</span>
-                            <span class="px-3 py-1 rounded-full text-sm bg-blue-500/10 text-blue-400">Next.js</span>
-                            <span class="px-3 py-1 rounded-full text-sm bg-blue-500/10 text-blue-400">TypeScript</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Deneyim 2 -->
-                <div class="relative flex flex-col md:flex-row group mb-24">
-                    <div class="w-full md:w-1/2 md:pr-12 mb-4 md:mb-0">
-                        <div class="md:text-right space-y-2">
-                            <div class="inline-flex items-center space-x-2 md:space-x-reverse md:flex-row-reverse">
-                                <span class="text-purple-400 font-semibold">2020 - 2022</span>
-                                <div class="h-px w-12 bg-gradient-to-r from-purple-500 to-transparent md:from-transparent md:to-purple-500"></div>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-100">Frontend Geliştirici</h3>
-                            <p class="text-purple-400/80">ABC Yazılım</p>
-                        </div>
-                    </div>
-                    
-                    <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                        <div class="w-4 h-4 rounded-full bg-purple-500 ring-4 ring-purple-500/20 group-hover:ring-purple-500/40 transition-all duration-300"></div>
-                    </div>
-                    
-                    <div class="w-full md:w-1/2 md:pl-12 pl-16 md:pl-12">
-                        <p class="text-gray-400 leading-relaxed">
-                            E-ticaret projeleri, performans optimizasyonu ve responsive tasarım. Vue.js ve Nuxt.js ile geliştirme. Mikroservis mimarisi ile çalışma deneyimi.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="px-3 py-1 rounded-full text-sm bg-purple-500/10 text-purple-400">Vue.js</span>
-                            <span class="px-3 py-1 rounded-full text-sm bg-purple-500/10 text-purple-400">Nuxt.js</span>
-                            <span class="px-3 py-1 rounded-full text-sm bg-purple-500/10 text-purple-400">SCSS</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Deneyim 3 -->
-                <div class="relative flex flex-col md:flex-row group">
-                    <div class="w-full md:w-1/2 md:pr-12 mb-4 md:mb-0">
-                        <div class="md:text-right space-y-2">
-                            <div class="inline-flex items-center space-x-2 md:space-x-reverse md:flex-row-reverse">
-                                <span class="text-pink-400 font-semibold">2018 - 2020</span>
-                                <div class="h-px w-12 bg-gradient-to-r from-pink-500 to-transparent md:from-transparent md:to-pink-500"></div>
                             </div>
-                            <h3 class="text-xl font-bold text-gray-100">Jr. Web Geliştirici</h3>
-                            <p class="text-pink-400/80">DEF Digital</p>
-                        </div>
-                    </div>
-                    
-                    <div class="absolute left-8 md:left-1/2 transform -translate-x-1/2 flex items-center justify-center">
-                        <div class="w-4 h-4 rounded-full bg-pink-500 ring-4 ring-pink-500/20 group-hover:ring-pink-500/40 transition-all duration-300"></div>
-                    </div>
-                    
-                    <div class="w-full md:w-1/2 md:pl-12 pl-16 md:pl-12">
-                        <p class="text-gray-400 leading-relaxed">
-                            Kurumsal web siteleri ve landing page'ler. HTML, CSS, JavaScript ve WordPress ile geliştirme. SEO optimizasyonu ve performans iyileştirmeleri.
-                        </p>
-                        <div class="flex flex-wrap gap-2 mt-4">
-                            <span class="px-3 py-1 rounded-full text-sm bg-pink-500/10 text-pink-400">JavaScript</span>
-                            <span class="px-3 py-1 rounded-full text-sm bg-pink-500/10 text-pink-400">WordPress</span>
-                            <span class="px-3 py-1 rounded-full text-sm bg-pink-500/10 text-pink-400">PHP</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Projeler Bölümü -->
-    <section class="py-20 bg-[#0B1120]/95">
+    <section id="contact" class="py-20 bg-gray-50 dark:bg-gray-800 transition-colors duration-300">
         <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
-                Projelerim
-            </h2>
-            
-            <div class="relative max-w-7xl mx-auto">
-                <!-- Slider Navigation -->
-                <button onclick="slideProjects('prev')" class="hidden md:flex absolute left-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 rounded-full items-center justify-center z-20 transition-all duration-300 backdrop-blur-sm">
-                    <i class="fas fa-chevron-left text-white"></i>
-                </button>
-                <button onclick="slideProjects('next')" class="hidden md:flex absolute right-0 top-1/2 -translate-y-1/2 w-10 h-10 bg-black/50 hover:bg-black/80 rounded-full items-center justify-center z-10 transition-all duration-300 backdrop-blur-sm">
-                    <i class="fas fa-chevron-right text-white"></i>
-                </button>
-
-                <!-- Slider Container -->
-                <div class="overflow-hidden slider-mask">
-                    <div id="projectsSlider" class="flex gap-6 transition-transform duration-500">
-                        <!-- Proje Kartı 1 -->
-                        <div class="flex-none w-[380px]">
-                            <div class="group relative overflow-hidden rounded-xl bg-[#1A2333] hover:shadow-2xl transition-all duration-500">
-                                <div class="aspect-video overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80" 
-                                         alt="E-Ticaret Projesi" 
-                                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="text-xl font-bold mb-3 text-gray-100">E-Ticaret Platformu</h3>
-                                    <p class="text-gray-400 mb-4 line-clamp-3">Modern ve kullanıcı dostu bir e-ticaret deneyimi sunan, React ve Node.js ile geliştirilmiş kapsamlı bir platform.</p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">React</span>
-                                        <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Node.js</span>
-                                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">MongoDB</span>
-                                    </div>
-                                    <button class="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transform hover:scale-[1.02] transition-all duration-300">
-                                        Projeyi İncele
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Proje Kartı 2 -->
-                        <div class="flex-none w-[380px]">
-                            <div class="group relative overflow-hidden rounded-xl bg-[#1A2333] hover:shadow-2xl transition-all duration-500">
-                                <div class="aspect-video overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&q=80" 
-                                         alt="AI Chat Uygulaması" 
-                                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="text-xl font-bold mb-3 text-gray-100">AI Chat Uygulaması</h3>
-                                    <p class="text-gray-400 mb-4 line-clamp-3">Yapay zeka destekli, gerçek zamanlı sohbet uygulaması. GPT-3 entegrasyonu ile akıllı yanıtlar.</p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Next.js</span>
-                                        <span class="px-3 py-1 bg-yellow-500/20 text-yellow-400 rounded-full text-sm">Python</span>
-                                        <span class="px-3 py-1 bg-red-500/20 text-red-400 rounded-full text-sm">TensorFlow</span>
-                                    </div>
-                                    <button class="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transform hover:scale-[1.02] transition-all duration-300">
-                                        Projeyi İncele
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Proje Kartı 3 -->
-                        <div class="flex-none w-[380px]">
-                            <div class="group relative overflow-hidden rounded-xl bg-[#1A2333] hover:shadow-2xl transition-all duration-500">
-                                <div class="aspect-video overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1590283603385-17ffb3a7f29f?auto=format&fit=crop&q=80" 
-                                         alt="Kripto Portföy Takibi" 
-                                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="text-xl font-bold mb-3 text-gray-100">Kripto Portföy Takibi</h3>
-                                    <p class="text-gray-400 mb-4 line-clamp-3">Gerçek zamanlı kripto para takibi ve portföy yönetimi uygulaması. Gelişmiş grafik ve analiz araçları.</p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">Vue.js</span>
-                                        <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Express</span>
-                                        <span class="px-3 py-1 bg-orange-500/20 text-orange-400 rounded-full text-sm">Firebase</span>
-                                    </div>
-                                    <button class="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transform hover:scale-[1.02] transition-all duration-300">
-                                        Projeyi İncele
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Proje Kartı 4 -->
-                        <div class="flex-none w-[380px]">
-                            <div class="group relative overflow-hidden rounded-xl bg-[#1A2333] hover:shadow-2xl transition-all duration-500">
-                                <div class="aspect-video overflow-hidden">
-                                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?auto=format&fit=crop&q=80" 
-                                         alt="Sosyal Medya Dashboard" 
-                                         class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500">
-                                </div>
-                                <div class="p-6">
-                                    <h3 class="text-xl font-bold mb-3 text-gray-100">Sosyal Medya Dashboard</h3>
-                                    <p class="text-gray-400 mb-4 line-clamp-3">Tüm sosyal medya hesaplarınızı tek bir panelden yönetin. Analitik ve içerik planlama araçları.</p>
-                                    <div class="flex flex-wrap gap-2 mb-4">
-                                        <span class="px-3 py-1 bg-blue-500/20 text-blue-400 rounded-full text-sm">React</span>
-                                        <span class="px-3 py-1 bg-purple-500/20 text-purple-400 rounded-full text-sm">GraphQL</span>
-                                        <span class="px-3 py-1 bg-green-500/20 text-green-400 rounded-full text-sm">Node.js</span>
-                                    </div>
-                                    <button class="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-lg hover:from-blue-600 hover:to-purple-600 transform hover:scale-[1.02] transition-all duration-300">
-                                        Projeyi İncele
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- İletişim Bölümü -->
-    <section class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-500">
+            <h2
+                class="text-3xl md:text-4xl font-bold text-center mb-12 bg-clip-text text-transparent bg-gradient-to-r from-emerald-600 to-lime-600 dark:from-emerald-400 dark:to-lime-400">
                 İletişime Geç
             </h2>
-            <div class="max-w-4xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <!-- İletişim Bilgileri -->
+            <div
+                class="max-w-4xl mx-auto bg-white dark:bg-gray-800 p-8 rounded-xl shadow-lg border border-stone-200 dark:border-gray-700/50">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                     <div class="space-y-6">
-                        <div class="bg-gray-900/50 p-6 rounded-xl hover:shadow-xl transition-all duration-300">
-                            <h3 class="text-xl font-semibold mb-4">İletişim Bilgileri</h3>
-                            <div class="space-y-4">
-                                <div class="flex items-center space-x-3">
-                                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/>
-                                    </svg>
-                                    <span class="text-gray-300">email@example.com</span>
+                        <h3 class="text-2xl font-semibold text-stone-800 dark:text-white mb-4">Bilgilerim</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-start space-x-3 group">
+                                <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                    </path>
+                                </svg>
+                                <div>
+                                    <span class="font-medium text-stone-700 dark:text-stone-300">E-posta</span>
+                                    <a id="contact-email" href="mailto:email@example.com"
+                                        class="block text-stone-600 dark:text-stone-400 hover:text-emerald-600 dark:hover:text-emerald-400 transition-colors duration-200">email@example.com</a>
                                 </div>
-                                <div class="flex items-center space-x-3">
-                                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/>
-                                    </svg>
-                                    <span class="text-gray-300">+90 555 123 4567</span>
+                            </div>
+                            <div class="flex items-start space-x-3 group">
+                                <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                    </path>
+                                </svg>
+                                <div>
+                                    <span class="font-medium text-stone-700 dark:text-stone-300">Telefon</span>
+                                    <span id="contact-phone" class="block text-stone-600 dark:text-stone-400">+90 555
+                                        123 4567</span>
                                 </div>
-                                <div class="flex items-center space-x-3">
-                                    <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
-                                    </svg>
-                                    <span class="text-gray-300">İstanbul, Türkiye</span>
+                            </div>
+                            <div class="flex items-start space-x-3 group">
+                                <svg class="w-6 h-6 text-emerald-600 dark:text-emerald-400 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                    </path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z">
+                                    </path>
+                                </svg>
+                                <div>
+                                    <span class="font-medium text-stone-700 dark:text-stone-300">Konum</span>
+                                    <span id="contact-location" class="block text-stone-600 dark:text-stone-400">İstanbul, Türkiye</span>
                                 </div>
                             </div>
                         </div>
+                        <p class="text-stone-600 dark:text-stone-400 text-sm pt-4">
+                            Yeni projeler ve işbirliği fırsatları için iletişime geçmekten çekinmeyin!
+                        </p>
                     </div>
-
-                    <!-- İletişim Formu -->
-                    <form class="space-y-6">
+                    <form action="#" method="POST" class="space-y-6">
                         <div>
-                            <input type="text" placeholder="Adınız" 
-                                   class="w-full px-4 py-3 bg-gray-900/50 rounded-xl border border-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300">
+                            <label for="name" class="block mb-2 text-sm font-medium text-stone-700 dark:text-stone-300">Adınız</label>
+                            <input type="text" id="name" name="name" placeholder="Adınız Soyadınız" required
+                                class="w-full px-4 py-3 bg-stone-50 dark:bg-gray-700 border border-stone-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent dark:text-white transition-all duration-300 outline-none placeholder-stone-400 dark:placeholder-stone-500">
                         </div>
                         <div>
-                            <input type="email" placeholder="E-posta Adresiniz" 
-                                   class="w-full px-4 py-3 bg-gray-900/50 rounded-xl border border-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300">
+                            <label for="email" class="block mb-2 text-sm font-medium text-stone-700 dark:text-stone-300">E-posta
+                                Adresiniz</label>
+                            <input type="email" id="email" name="email" placeholder="email@adresiniz.com" required
+                                class="w-full px-4 py-3 bg-stone-50 dark:bg-gray-700 border border-stone-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent dark:text-white transition-all duration-300 outline-none placeholder-stone-400 dark:placeholder-stone-500">
                         </div>
                         <div>
-                            <textarea placeholder="Mesajınız" rows="4" 
-                                      class="w-full px-4 py-3 bg-gray-900/50 rounded-xl border border-gray-800 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all duration-300"></textarea>
+                            <label for="message" class="block mb-2 text-sm font-medium text-stone-700 dark:text-stone-300">Mesajınız</label>
+                            <textarea id="message" name="message" placeholder="Mesajınızı buraya yazın..." rows="4" required
+                                class="w-full px-4 py-3 bg-stone-50 dark:bg-gray-700 border border-stone-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-emerald-500 dark:focus:ring-emerald-400 focus:border-transparent dark:text-white transition-all duration-300 outline-none resize-none placeholder-stone-400 dark:placeholder-stone-500"></textarea>
                         </div>
-                        <button class="w-full px-6 py-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white rounded-xl hover:shadow-lg transform hover:scale-[1.02] transition-all duration-300">
+                        <button type="submit"
+                            class="w-full px-6 py-3 bg-gradient-to-r from-emerald-600 to-lime-600 hover:from-emerald-700 hover:to-lime-700 text-white font-semibold rounded-xl shadow-md hover:shadow-lg transform hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-emerald-500 dark:focus:ring-offset-gray-900 transition-all duration-300">
                             Mesaj Gönder
                         </button>
+                        <p id="form-status" class="text-sm text-center mt-4"></p>
                     </form>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="py-8 bg-gray-900/80">
-        <div class="container mx-auto px-4 text-center text-gray-400">
-            <p>&copy; 2024 Tüm hakları saklıdır.</p>
+    <footer class="py-8 bg-stone-200 dark:bg-gray-800 transition-colors duration-300">
+        <div class="container mx-auto px-4 text-center text-stone-600 dark:text-stone-400 text-sm">
+            <p id="footer-text">© 2024 Tüm hakları saklıdır.</p>
         </div>
     </footer>
 
-    <!-- JavaScript kodu için script ekleyelim -->
     <script>
-        let currentProjectsPosition = 0;
-        const projectsSlider = document.getElementById('projectsSlider');
-        let isDragging = false;
-        let startPos = 0;
-        let currentTranslate = 0;
+                                            // --- Data ---
+                                            // BURAYI KENDİ BİLGİLERİNLE GÜNCELLE!
+                                            const cvData = {
+                                                profile: { name: "Cihat Aydın", title: "Yazılım Geliştirici", summary: "Modern web teknolojileriyle...", profileImage: "https://avatars.githubusercontent.com/u/64714664?v=4", social: { github: "https://github.com/cihataydin", linkedin: "https://www.linkedin.com/in/cihat-aydin/", twitter: "https://x.com/cihataydin_dev" } },
+                                                skills: [
+                                                    { category: "frontend", name: "HTML5", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#E44D26" d="M20.9 111.2l-7.9-89 94.9.1 7.9 89-47.5 16.7z"/><path fill="#F16529" d="M64 115.7l39.2-13.3 6.8-76.4H64z"/><path fill="#EBEBEB" d="M64 42.7v21h30l2-21zM64 74.7v21l24.1-8.1 1.6-18.2H64z"/><path fill="#FFF" d="M64 42.7H36l-2 21h30zM64 95.7l-24-8-1.7-18.3h25.7z"/></svg>` },
+                                                    { category: "frontend", name: "CSS3", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#1572B6" d="M20.9 111.2l-7.9-89 94.9.1 7.9 89-47.5 16.7z"/><path fill="#33A9DC" d="M64 115.7l39.2-13.3 6.8-76.4H64z"/><path fill="#FFF" d="M64 42.7H36l-2 21h30zM64 95.7l-24-8-1.7-18.3h25.7z"/><path fill="#EBEBEB" d="M64 42.7v21h30l2-21zM64 74.7v21l24.1-8.1 1.6-18.2H64z"/></svg>` },
+                                                    { category: "frontend", name: "JavaScript", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#F0DB4F" d="M1.6 1.6h124.9v124.9H1.6z"/><path d="M111.8 98.1c-2.4 5.9-8.1 9.6-16 9.6-6.8 0-11.9-3.1-14.8-7.7l5.9-3.7c1.7 2.7 4.3 4.8 8.8 4.8 4.3 0 6.8-2.1 6.8-5.2 0-3.7-2.7-4.8-7.4-6.8-6.6-2.8-11-6.8-11-14.3 0-6.4 4.8-11.4 12.7-11.4 6.4 0 10.7 2.8 13.6 7.2l-5.8 3.7c-1.4-2.4-3.3-3.7-7.8-3.7-3.2 0-5.3 1.8-5.3 4.4 0 3.2 2.1 4.2 6.4 6.2 7.4 3.3 12 7.4 12 15.1 0 6.5-4.1 12.4-14.6 12.4-8.7 0-14.4-4.3-17.4-10.8l6-3.4c1.8 3.8 5.1 6.4 11.4 6.4 6.5 0 10.2-3 10.2-7.3 0-4.9-3.2-6.8-8.8-9.1-6.2-2.6-10.1-6.4-10.1-13.1 0-6.4 4.9-10.8 11.5-10.8 7.3 0 11.7 4 13.8 7.6l-5.9 3.4c-1.2-2-3-3.2-7.8-3.2-3.6 0-5.8 1.9-5.8 4.8 0 3.4 2.3 4.7 7.5 6.8 5.7 2.4 9.2 6.1 9.2 13.2zM49.5 97.5c-6.1 0-10-4.2-10-10.3V63.6h-7.3v-6.1h7.3V43.2l7-2.6v16.9h7.8v6.1h-7.8v22.8c0 3.4.9 5.6 4.5 5.6 1.6 0 2.7-.2 3.6-.5v6.1c-1.2.4-2.8.6-4.8.6z"/></svg>` },
+                                                    { category: "frontend", name: "React", iconSVG: `<svg viewBox="0 0 1200 1080"><path fill="#61DAFB" d="M600 540a540 540 0 1 0 0-1080 540 540 0 0 0 0 1080zm0-317.5c122.8 0 222.5 99.7 222.5 222.5s-99.7 222.5-222.5 222.5S377.5 767.8 377.5 645s99.7-222.5 222.5-222.5zm0 0c122.8 0 222.5 99.7 222.5 222.5S722.8 867.5 600 867.5 377.5 767.8 377.5 645s99.7-222.5 222.5-222.5z"/><ellipse fill="#61DAFB" cx="600" cy="540" rx="100" ry="260" transform="rotate(30 600 540)"/><ellipse fill="#61DAFB" cx="600" cy="540" rx="100" ry="260" transform="rotate(90 600 540)"/><ellipse fill="#61DAFB" cx="600" cy="540" rx="100" ry="260" transform="rotate(150 600 540)"/><circle fill="#20232A" cx="600" cy="540" r="60"/></svg>` },
+                                                    { category: "frontend", name: "Tailwind CSS", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#38BDF8" d="M64.001 17.711c-16.184 0-29.36 8.534-29.36 19.077 0 7.39 8.048 14.038 19.88 17.358-4.21 2.644-10.765 2.95-10.765 6.845 0 5.36 9.34 6.363 14.96 6.363 11.15 0 20.45-4.94 20.45-15.468 0-10.543-13.176-19.078-29.36-19.078zm0 49.678c-16.184 0-29.36 8.535-29.36 19.078 0 7.39 8.048 14.038 19.88 17.358-4.21 2.645-10.765 2.95-10.765 6.845 0 5.36 9.34 6.363 14.96 6.363 11.15 0 20.45-4.94 20.45-15.468 0-10.543-13.176-19.078-29.36-19.078z"/></svg>` },
+                                                    { category: "backend", name: "Node.js", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#83CD29" d="M64.002 1.6C51.89 1.6 40.46 5.77 31.28 13.12C5.06 30.5.39 58.89.39 89.3c0 8.6 1.13 17.1 3.33 25.1l.43 1.56c1.86 6.68 7.14 11.83 13.92 11.83H110c6.78 0 12.06-5.15 13.92-11.83l.42-1.56c2.2-8 3.33-16.5 3.33-25.1 0-30.42-4.66-58.8-30.89-76.18C87.54 5.77 76.11 1.6 64.002 1.6zM99 97.8H86.1c-2.7 0-4.3-1.9-3.6-4.5l16.1-60.3c.6-2.6 2.5-3.8 4.8-3.8h12.9c2.7 0 4.3 1.9 3.6 4.5l-16.1 60.3c-.7 2.6-2.6 3.8-4.8 3.8zm-66.9 0H19.1c-2.7 0-4.3-1.9-3.6-4.5L31.6 33c.6-2.6 2.5-3.8 4.8-3.8h12.9c2.7 0 4.3 1.9 3.6 4.5L38.8 93.3c-.7 2.6-2.6 3.8-4.8 3.8zm43.4-43.8l-10.2 38.3c-.7 2.6-2.6 4.3-5.3 4.3H46.7c-2.7 0-4.6-1.8-5.3-4.3l-10.2-38.3c-.7-2.6.7-4.9 3.4-4.9h13.5c1.8 0 3.4.9 4.2 2.5l4.7 18.6 4.7-18.6c.8-1.6 2.4-2.5 4.2-2.5h13.5c2.7 0 4.1 2.3 3.4 4.9z"/></svg>` },
+                                                    { category: "backend", name: "Python", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#FFD43B" d="M83.3 1.6H44.7C19.6 1.6 1.6 19.6 1.6 44.7v19.1h62.9c16.1 0 29.2 13.1 29.2 29.2v18.9h16.5c11.4 0 20.7-9.3 20.7-20.7V44.7c-.1-23.1-18-43.1-41.1-43.1z"/><path fill="#4B8BBE" d="M44.7 126.4h38.6c25.1 0 43.1-18 43.1-41.1V64.7H63.5c-16.1 0-29.2-13.1-29.2-29.2V16.6H18.9C7.5 16.6-1.8 25.9-1.8 37.3v44.4c0 25.1 21.6 44.7 46.5 44.7z"/><circle fill="#FFF" cx="38.3" cy="90.7" r="7.8"/><circle fill="#FFF" cx="89.7" cy="37.3" r="7.8"/></svg>` },
+                                                    { category: "databases-others", name: "PostgreSQL", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#336791" d="M1.6 1.6h124.9v124.9H1.6z"/><path fill="#FFF" d="M87.2 90.5c0 11-7.9 18.1-20.7 18.1h-20v-98h21.7c12.1 0 19 6.8 19 16.5 0 6.1-2.9 11.4-8.7 14.5 7.5 2.8 11.6 8.8 11.6 16.6v3.1c0 5.4 1.4 11.2-3.1 15.8 4.1 1.5 7.3 6.4 7.3 13.4zm-34.7-73v27.2h11c6.6 0 10.4-3.7 10.4-9.8 0-6.6-4-10.3-11.2-10.3h-10.2zm0 66.3h12.9c7.7 0 12.5-4.1 12.5-11.2 0-7.2-4.6-11.2-12.5-11.2H52.5v22.4z"/></svg>` },
+                                                    { category: "databases-others", name: "MongoDB", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#589636" d="M87.8 117.6c-1.1 1.7-2.5 3.2-4.3 4.3C64.7 134.6 37.3 131.9 22.1 114s-15-46.3 3.8-59c3.4-2.3 7.1-4 11-5.2 1.7-.5 3.5-.8 5.3-1 .2-.1.5-.1.7-.2.2-.1.5-.1.7-.1 1.4-.2 2.7-.3 4.1-.3 3.8 0 7.5.8 11 2.3 1.1.5 2.1 1 3.1 1.6 1.8 1.1 3.5 2.3 5.1 3.7 1.6 1.4 3 3 4.3 4.7.2.2.3.4.5.6 1.5 2.1 2.6 4.4 3.3 6.8.6 2 .9 4.1.9 6.1v34.3c0 .4-.1.8-.1 1.2-.1 1.1-.3 2.3-.7 3.4zM64 1.6C52.9 1.6 42.3 4.4 33.3 9.5c-1.1.6-2.2 1.3-3.2 2-16.1 10.9-26.6 28-28.7 47.2-1.8 15.9 1.9 31.8 10.4 45.1 1.2 1.9 2.7 3.7 4.3 5.4 1.6 1.7 3.4 3.2 5.3 4.6C39.9 124.1 66.6 126.4 82.1 111c13.2-13.9 18.7-32.9 15.6-50.9-2.6-15.4-10.5-29.4-22.3-39.2-1.8-1.5-3.7-2.8-5.7-4C70.5 3.1 67.3 1.6 64 1.6z"/><path fill="#FFF" d="M65.8 49.8c-3.9-1.2-7.8-1.8-11.8-1.8-1.4 0-2.7.1-4.1.3-.2 0-.5.1-.7.1-.2 0-.5.1-.7.2-1.8.2-3.6.5-5.3 1-3.9 1.1-7.6 2.8-11 5.2C25.9 63.7 7.1 87.4 22.1 107.7s42.6 26.7 61.4 14c1.8-1.2 3.3-2.6 4.3-4.3.9-1.1 1.7-2.3 2.4-3.4.3-.9.5-1.8.7-2.7.1-.4.1-.8.1-1.2V76.5c0-2-.3-4.1-.9-6.1-.7-2.4-1.8-4.7-3.3-6.8-.1-.2-.3-.4-.5-.6-1.3-1.7-2.7-3.3-4.3-4.7-1.6-1.4-3.3-2.6-5.1-3.7-1-.6-2-1.1-3.1-1.6z"/></svg>` },
+                                                    { category: "tools-devops", name: "Git", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#E44C30" d="M119.2 56.1L71.9 8.8c-4.1-4.1-10.7-4.1-14.8 0L49.3 16.6l14.8 14.8c1.8 1.8 2.6 4.1 2.3 6.4-.3 2.3-1.7 4.4-3.8 5.6l-11.7 6.7c-.6.3-1.1.7-1.6 1.1l-11.7 6.7c-2.1 1.2-3.5 3.3-3.8 5.6-.3 2.3.5 4.7 2.3 6.4l31.8 31.8c4.1 4.1 10.7 4.1 14.8 0l47.3-47.3c4-4.1 4-10.7-.1-14.8z"/><path fill="#FFF" d="M90.3 56.1c-4.6 0-8.4 3.8-8.4 8.4s3.8 8.4 8.4 8.4 8.4-3.8 8.4-8.4-3.8-8.4-8.4-8.4zm-18.9 8.4c0-1.8-.6-3.4-1.7-4.8L56.9 79.1c1.4 1 3 1.7 4.8 1.7 4.6 0 8.4-3.8 8.4-8.4zm-8.4-18.9c-1.8 0-3.4.6-4.8 1.7L79.6 60c1-1.4 1.7-3 1.7-4.8 0-4.6-3.8-8.4-8.4-8.4z"/></svg>` },
+                                                    { category: "tools-devops", name: "Docker", iconSVG: `<svg viewBox="0 0 128 128"><path fill="#0db7ed" d="M123.9 60.8c-1.1-4.8-6.3-10.3-14.9-10.3h-11.3v-10c0-3.1-.9-5.6-2.6-7.6-1.7-2-4.1-2.9-7.1-2.9h-33c-5.2 0-8.7 1.2-10.6 3.5-1.9 2.4-2.8 5.8-2.8 10.3v5.8h-9.8c-3.1 0-5.6.9-7.6 2.6-2 1.7-2.9 4.1-2.9 7.1v21.7c0 5.2 1.2 8.7 3.5 10.6 2.4 1.9 5.8 2.8 10.3 2.8h5.8v9.8c0 3.1.9 5.6 2.6 7.6 1.7 2 4.1 2.9 7.1 2.9h21.7c5.2 0 8.7-1.2 10.6-3.5 1.9-2.4 2.8-5.8 2.8-10.3V89h9.8c3.1 0 5.6-.9 7.6-2.6 2-1.7 2.9-4.1 2.9-7.1v-10c0-3.1-.9-5.6-2.6-7.6-1.8-1.9-4.1-2.9-7.2-2.9h-10v-9.9h7.5c3.7 0 6.6 1.1 8.6 3.4 2 2.3 3.3 5.5 3.9 9.7.5 4.2 3.4 6.3 8.6 6.3h7.6c4.9 0 8.5-1.7 10.9-5.2 2.4-3.5 2.9-7.9 1.8-13.1zM38.2 67.8h9.8v9.8h-9.8v-9.8zm0-12.2h9.8v9.8h-9.8v-9.8zm12.2 12.2h9.8v9.8h-9.8v-9.8zm12.2 12.2h9.8v9.8h-9.8v-9.8zm0-12.2h9.8v9.8h-9.8v-9.8zm-12.2-12.2h9.8v9.8h-9.8v-9.8zm12.2 0h9.8v9.8h-9.8v-9.8zm12.2 12.2h9.8v9.8h-9.8v-9.8zm0-12.2h9.8v9.8h-9.8v-9.8zm12.2 0h9.8v9.8h-9.8v-9.8z"/></svg>` },
+                                                ],
+                                                experiences: [
+                                                    { period: "2022 - Günümüz", title: "Kıdemli Yazılım Geliştirici", company: "Teknoloji Harikaları A.Ş.", description: "Ölçeklenebilir backend sistemleri...", technologies: ["TypeScript", "React", "Node.js", "Docker", "AWS"], color: "emerald" },
+                                                    { period: "2020 - 2022", title: "Orta Düzey Yazılım Geliştirici", company: "Yazılım Çözümleri Ltd.", description: "E-ticaret platformları için...", technologies: ["JavaScript", "Vue.js", "PHP", "Laravel", "MySQL"], color: "lime" },
+                                                    { period: "2019 - 2020", title: "Junior Web Geliştirici", company: "Dijital Atılım Ajansı", description: "Müşteri web siteleri için...", technologies: ["HTML", "CSS", "JavaScript", "WordPress", "jQuery"], color: "amber" }
+                                                ],
+                                                contact: { email: "cihataydin.tr@gmail.com", phone: "+90 555 123 4567", location: "İstanbul, Türkiye" }
+                                            };
 
-        function slideProjects(direction) {
-            const containerWidth = projectsSlider.parentElement.offsetWidth;
-            const visibleProjects = Math.floor(containerWidth / (380 + 24)); // 380px card + 24px gap
-            const totalProjects = projectsSlider.children.length;
-            const maxPosition = -(totalProjects - visibleProjects) * (380 + 24);
-
-            if (direction === 'next' && currentProjectsPosition > maxPosition) {
-                currentProjectsPosition -= (380 + 24);
-            } else if (direction === 'prev' && currentProjectsPosition < 0) {
-                currentProjectsPosition += (380 + 24);
-            }
-
-            currentProjectsPosition = Math.max(maxPosition, Math.min(0, currentProjectsPosition));
-            projectsSlider.style.transform = `translateX(${currentProjectsPosition}px)`;
-
-            // Navigasyon butonlarını güncelle
-            const prevButton = projectsSlider.parentElement.parentElement.querySelector('button[onclick="slideProjects(\'prev\')"]');
-            const nextButton = projectsSlider.parentElement.parentElement.querySelector('button[onclick="slideProjects(\'next\')"]');
-            
-            prevButton.style.opacity = currentProjectsPosition < 0 ? '1' : '0.5';
-            nextButton.style.opacity = currentProjectsPosition > maxPosition ? '1' : '0.5';
+                                            // --- Theme Toggle ---
+                                            const themeToggleBtn = document.getElementById('theme-toggle');
+                                            const sunIcon = document.getElementById('theme-toggle-sun-icon');
+                                            const moonIcon = document.getElementById('theme-toggle-moon-icon');
+                                            if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches))
+                                            {
+                                                document.documentElement.classList.add('dark'); moonIcon?.classList.remove('hidden');
+                                            } else
+                                            {
+                                                document.documentElement.classList.remove('dark'); sunIcon?.classList.remove('hidden');
         }
-
-        // Sürükleme için yeni fonksiyonlar
-        function dragStart(e) {
-            isDragging = true;
-            startPos = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            currentTranslate = currentProjectsPosition;
-            
-            projectsSlider.style.cursor = 'grabbing';
-            projectsSlider.style.transition = 'none';
-        }
-
-        function dragMove(e) {
-            if (!isDragging) return;
-            
-            const currentPosition = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-            const diff = currentPosition - startPos;
-            
-            const containerWidth = projectsSlider.parentElement.offsetWidth;
-            const maxScroll = -(projectsSlider.scrollWidth - containerWidth);
-            
-            let newTranslate = currentTranslate + diff;
-            newTranslate = Math.max(maxScroll, Math.min(0, newTranslate));
-            
-            projectsSlider.style.transform = `translateX(${newTranslate}px)`;
-        }
-
-        function dragEnd() {
-            isDragging = false;
-            projectsSlider.style.cursor = 'grab';
-            projectsSlider.style.transition = 'transform 0.3s ease-out';
-            
-            // Son pozisyonu kaydet
-            const transform = window.getComputedStyle(projectsSlider).transform;
-            currentProjectsPosition = transform !== 'none' ? parseInt(transform.split(',')[4]) : 0;
-            
-            // Navigasyon butonlarını güncelle
-            const containerWidth = projectsSlider.parentElement.offsetWidth;
-            const maxScroll = -(projectsSlider.scrollWidth - containerWidth);
-            
-            const prevButton = projectsSlider.parentElement.parentElement.querySelector('button[onclick="slideProjects(\'prev\')"]');
-            const nextButton = projectsSlider.parentElement.parentElement.querySelector('button[onclick="slideProjects(\'next\')"]');
-            
-            prevButton.style.opacity = currentProjectsPosition < 0 ? '1' : '0.5';
-            nextButton.style.opacity = currentProjectsPosition > maxScroll ? '1' : '0.5';
-        }
-
-        // Sürükleme olaylarını ekle
-        projectsSlider.addEventListener('mousedown', dragStart);
-        projectsSlider.addEventListener('mousemove', dragMove);
-        projectsSlider.addEventListener('mouseup', dragEnd);
-        projectsSlider.addEventListener('mouseleave', dragEnd);
-
-        projectsSlider.addEventListener('touchstart', dragStart);
-        projectsSlider.addEventListener('touchmove', dragMove);
-        projectsSlider.addEventListener('touchend', dragEnd);
-
-        // Sayfa yüklendiğinde
-        window.addEventListener('load', () => {
-            projectsSlider.style.cursor = 'grab';
-            slideProjects('next'); // Butonları güncellemek için
+                                            themeToggleBtn?.addEventListener('click', function ()
+                                            {
+                                                sunIcon?.classList.toggle('hidden');
+                                                moonIcon?.classList.toggle('hidden');
+                                                if (localStorage.getItem('color-theme'))
+                                                {
+                                                    if (localStorage.getItem('color-theme') === 'light') { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
+                                                    else { document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light'); }
+                                                } else
+                                                {
+                                                    if (document.documentElement.classList.contains('dark')) { document.documentElement.classList.remove('dark'); localStorage.setItem('color-theme', 'light'); }
+                                                    else { document.documentElement.classList.add('dark'); localStorage.setItem('color-theme', 'dark'); }
+                                                }
         });
 
-        // Pencere yeniden boyutlandığında
-        window.addEventListener('resize', () => {
-            currentProjectsPosition = 0;
-            projectsSlider.style.transform = 'translateX(0)';
-            slideProjects('next');
-        });
+                                            // --- DOM Content Loaded ---
+                                            document.addEventListener('DOMContentLoaded', function ()
+                                            {
+                                                // --- Populate Profile, Socials, Contact, Footer ---
+                                                const profileNameEl = document.getElementById('profile-name'); const profileTitleEl = document.getElementById('profile-title'); const profileSummaryEl = document.getElementById('profile-summary'); const profileImageEl = document.getElementById('profile-image'); const socialGithubEl = document.getElementById('social-github'); const socialLinkedinEl = document.getElementById('social-linkedin'); const socialTwitterEl = document.getElementById('social-twitter'); const contactEmailEl = document.getElementById('contact-email'); const contactPhoneEl = document.getElementById('contact-phone'); const contactLocationEl = document.getElementById('contact-location'); const footerTextEl = document.getElementById('footer-text');
+                                                if (profileNameEl) profileNameEl.textContent = cvData.profile.name; if (profileTitleEl) profileTitleEl.textContent = cvData.profile.title; if (profileSummaryEl) profileSummaryEl.textContent = cvData.profile.summary; if (profileImageEl) { profileImageEl.src = cvData.profile.profileImage; profileImageEl.alt = `${cvData.profile.name} - Profil Fotoğrafı`; } if (cvData.profile.social.github && socialGithubEl) socialGithubEl.href = cvData.profile.social.github; else socialGithubEl?.remove(); if (cvData.profile.social.linkedin && socialLinkedinEl) socialLinkedinEl.href = cvData.profile.social.linkedin; else socialLinkedinEl?.remove(); if (cvData.profile.social.twitter && socialTwitterEl) socialTwitterEl.href = cvData.profile.social.twitter; else socialTwitterEl?.remove(); if (contactEmailEl) { contactEmailEl.textContent = cvData.contact.email; contactEmailEl.href = `mailto:${cvData.contact.email}`; } if (cvData.contact.phone && contactPhoneEl) contactPhoneEl.textContent = cvData.contact.phone; else contactPhoneEl?.closest('div.flex')?.remove(); if (contactLocationEl) contactLocationEl.textContent = cvData.contact.location; if (footerTextEl) footerTextEl.innerHTML = `© ${new Date().getFullYear()} ${cvData.profile.name} | Tüm hakları saklıdır.`;
 
-        // Context menu'yü engelle
-        projectsSlider.addEventListener('contextmenu', (e) => e.preventDefault());
-    </script>
+                                            // --- Populate Experiences ---
+                                            const experienceContainer = document.querySelector('#experience .max-w-3xl');
+                                            if (experienceContainer && cvData.experiences)
+                                            {
+                                                experienceContainer.innerHTML = cvData.experiences.map((exp, index) =>
+                                                {
+                                                    const color = exp.color || 'gray';
+                                                    return `<article class="timeline-item group relative flex flex-col md:flex-row items-start mb-12 md:mb-16 ${index % 2 === 0 ? 'md:flex-row-reverse' : ''}"><div class="timeline-date w-full md:w-5/12 ${index % 2 === 0 ? 'md:pl-10' : 'md:pr-10 md:text-right'} mb-4 md:mb-0"><div class="sticky top-20"><span class="block text-sm font-semibold text-${color}-600 dark:text-${color}-400 mb-1">${exp.period}</span><h3 class="text-xl font-bold text-stone-800 dark:text-white">${exp.title}</h3><p class="text-md font-medium text-stone-600 dark:text-stone-400">${exp.company}</p></div></div><div class="timeline-content w-full md:w-7/12 ${index % 2 === 0 ? 'md:pr-10' : 'md:pl-10'} pl-10 md:pl-0 md:pr-0 relative"><div class="absolute top-0 bottom-0 left-4 w-0.5 bg-gradient-to-b from-${color}-200 to-transparent dark:from-${color}-700/50 md:hidden"></div><div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md relative border border-stone-200 dark:border-gray-700/50"><p class="text-stone-700 dark:text-stone-300 leading-relaxed mb-4">${exp.description}</p><div class="flex flex-wrap gap-2">${exp.technologies.map(tech => `<span class="px-3 py-1 rounded-full text-xs font-medium bg-${color}-100 text-${color}-800 dark:bg-${color}-900/50 dark:text-${color}-300">${tech}</span>`).join('')}</div></div></div></article>`;
+                                                }).join('');
+                                            }
 
-    <style>
-    /* Sürüklenebilir slider için stil */
-    #projectsSlider {
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        touch-action: pan-y pinch-zoom;
-    }
+                                            // --- Populate Skills ---
+                                            const skillCategories = {
+                                                frontend: { el: document.getElementById('skills-frontend'), titleEl: document.getElementById('skills-frontend-title'), iconEl: document.getElementById('skills-frontend-icon'), color: 'emerald' },
+                                                backend: { el: document.getElementById('skills-backend'), titleEl: document.getElementById('skills-backend-title'), iconEl: document.getElementById('skills-backend-icon'), color: 'lime' },
+                                                'databases-others': { el: document.getElementById('skills-databases-others'), titleEl: document.getElementById('skills-databases-others-title'), iconEl: document.getElementById('skills-databases-others-icon'), color: 'amber' },
+                                                'tools-devops': { el: document.getElementById('skills-tools-devops'), titleEl: document.getElementById('skills-tools-devops-title'), iconEl: document.getElementById('skills-tools-devops-icon'), color: 'orange' }
+                                            };
 
-    @media (hover: hover) {
-        #projectsSlider:hover {
-            cursor: grab;
-        }
-        
-        #projectsSlider:active {
-            cursor: grabbing;
-        }
-    }
-    </style>
+                                            Object.values(skillCategories).forEach(cat =>
+                                            {
+                                                if (cat.el) cat.el.innerHTML = '';
+                                                if (cat.titleEl) cat.titleEl.classList.add(`border-${cat.color}-500`, `dark:border-${cat.color}-400`);
+                                                if (cat.iconEl) cat.iconEl.classList.add(`text-${cat.color}-600`, `dark:text-${cat.color}-400`);
+                                                if (cat.el) cat.el.className = 'grid grid-cols-1 gap-y-3';
+                                            });
 
-    <script>
-    // Yetenekler için global değişkenler
-    let currentSkillsPosition = 0;
-    const skillsSlider = document.getElementById('skillsSlider');
-    let isSkillsDragging = false;
-    let skillsStartPos = 0;
-    let skillsCurrentTranslate = 0;
+                                            cvData.skills.forEach(skill =>
+                                            {
+                                                const categoryInfo = skillCategories[skill.category];
+                                                if (categoryInfo && categoryInfo.el)
+                                                {
+                                                    const skillElement = document.createElement('div');
+                                                    skillElement.className = 'flex items-center space-x-3 bg-white dark:bg-gray-700/60 p-3 rounded-lg shadow-sm hover:shadow-md transition-shadow duration-300 border border-stone-100 dark:border-gray-700';
+                                                    skillElement.innerHTML = `
+                        <div class="w-8 h-8 flex-shrink-0 flex items-center justify-center text-stone-600 dark:text-stone-300 overflow-hidden">
+                            ${skill.iconSVG ? skill.iconSVG : `<span class="text-xl font-bold">${skill.name.substring(0, 1)}</span>`}
+                        </div>
+                        <span class="text-sm font-medium text-stone-700 dark:text-stone-200 flex-1 min-w-0 break-words">${skill.name}</span>
+                    `;
+                                                    categoryInfo.el.appendChild(skillElement);
+                                                }
+                                        });
 
-    function slideSkills(direction) {
-        const containerWidth = skillsSlider.parentElement.offsetWidth;
-        const visibleSkills = Math.floor(containerWidth / (280 + 24)); // 280px card + 24px gap
-        const totalSkills = skillsSlider.children.length;
-        const maxPosition = -(totalSkills - visibleSkills) * (280 + 24);
+                                            // --- Contact Form Submit ---
+                                            const contactForm = document.querySelector('#contact form');
+                                            const formStatus = document.getElementById('form-status');
+                                            if (contactForm && formStatus)
+                                            {
+                                                contactForm.addEventListener('submit', function (e)
+                                                {
+                                                    e.preventDefault();
+                                                    formStatus.textContent = 'Mesajınız gönderiliyor...';
+                                                    formStatus.className = 'text-sm text-center mt-4 text-emerald-600 dark:text-emerald-400';
+                                                    setTimeout(() =>
+                                                    {
+                                                        formStatus.textContent = 'Mesajınız başarıyla gönderildi!';
+                                                        formStatus.className = 'text-sm text-center mt-4 text-lime-600 dark:text-lime-400';
+                                                        contactForm.reset();
+                                                    }, 1500);
+                                                });
+                                        }
+                                            if (typeof tsParticles !== 'undefined')
+                                            { // Kütüphanenin yüklendiğinden emin ol
+                                                tsParticles.load("particles-js", {
+                                                    fpsLimit: 60, // Performans için limit
+                                                    particles: {
+                                                        number: {
+                                                            value: 80, // Parçacık sayısı
+                                                            density: {
+                                                                enable: true,
+                                                                value_area: 800 // Yoğunluk alanı
+                                                            }
+                                                    },
+                                                    color: {
+                                                        // Renkleri Forest Canopy paletine uygun seçelim
+                                                        value: ["#34d399", "#a3e635", "#f5f5f4"] // emerald-400, lime-500, stone-100
+                                                    },
+                                                    shape: {
+                                                        type: "circle" // veya "triangle", "star" vb.
+                                                    },
+                                                    opacity: {
+                                                        value: 0.6, // Hafif yarı saydam
+                                                        random: true,
+                                                        anim: {
+                                                            enable: true,
+                                                            speed: 1,
+                                                            opacity_min: 0.1,
+                                                            sync: false
+                                                        }
+                                                    },
+                                                    size: {
+                                                        value: 3,
+                                                        random: true,
+                                                        anim: {
+                                                            enable: false // Boyut animasyonu genellikle rahatsız edici olabilir
+                                                        }
+                                                    },
+                                                    links: {
+                                                        // Bağlantı çizgilerinin rengi
+                                                        color: "#a8a29e", // stone-400
+                                                        distance: 150,
+                                                        enable: true,
+                                                        opacity: 0.4,
+                                                        width: 1
+                                                    },
+                                                    move: {
+                                                        enable: true,
+                                                        speed: 1.5, // Hareket hızı
+                                                        direction: "none", // Rastgele yön
+                                                        random: true,
+                                                        straight: false,
+                                                        out_mode: "out", // Ekran dışına çıkınca kaybolsun
+                                                        bounce: false, // Kenarlardan sekmesin
+                                                }
+                                                },
+                                                interactivity: {
+                                                    detect_on: "canvas",
+                                                    events: {
+                                                        onhover: {
+                                                            enable: true,
+                                                            mode: "grab" // Fare üzerine gelince yakala/bağlantı kur
+                                                        },
+                                                        onclick: {
+                                                            enable: true,
+                                                            mode: "push" // Tıklayınca it
+                                                        },
+                                                        resize: true
+                                                    },
+                                                    modes: {
+                                                        grab: {
+                                                            distance: 140,
+                                                            line_linked: {
+                                                                opacity: 1
+                                                            }
+                                                    },
+                                                    bubble: { // Alternatif mode: "bubble"
+                                                        distance: 400,
+                                                        size: 40,
+                                                        duration: 2,
+                                                        opacity: 8,
+                                                        speed: 3
+                                                    },
+                                                    repulse: { // Alternatif mode: "repulse"
+                                                        distance: 200,
+                                                        duration: 0.4
+                                                    },
+                                                    push: {
+                                                        particles_nb: 4 // Tıklayınca eklenecek parçacık sayısı
+                                                    },
+                                                    remove: {
+                                                        particles_nb: 2
+                                                    }
+                                                }
+                                                },
+                                                retina_detect: true // Yüksek çözünürlüklü ekranlarda daha iyi görünüm
+                                            });
+                                        }
 
-        if (direction === 'next' && currentSkillsPosition > maxPosition) {
-            currentSkillsPosition -= (280 + 24);
-        } else if (direction === 'prev' && currentSkillsPosition < 0) {
-            currentSkillsPosition += (280 + 24);
-        }
+                                        }); // End DOMContentLoaded
+                                    </script>
 
-        currentSkillsPosition = Math.max(maxPosition, Math.min(0, currentSkillsPosition));
-        skillsSlider.style.transform = `translateX(${currentSkillsPosition}px)`;
-
-        // Navigasyon butonlarını güncelle
-        const prevButton = skillsSlider.parentElement.parentElement.querySelector('button[onclick="slideSkills(\'prev\')"]');
-        const nextButton = skillsSlider.parentElement.parentElement.querySelector('button[onclick="slideSkills(\'next\')"]');
-        
-        prevButton.style.opacity = currentSkillsPosition < 0 ? '1' : '0.5';
-        nextButton.style.opacity = currentSkillsPosition > maxPosition ? '1' : '0.5';
-    }
-
-    // Yetenekler için sürükleme fonksiyonları
-    function dragStartSkills(e) {
-        isSkillsDragging = true;
-        skillsStartPos = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        skillsCurrentTranslate = currentSkillsPosition;
-        
-        skillsSlider.style.cursor = 'grabbing';
-        skillsSlider.style.transition = 'none';
-    }
-
-    function dragMoveSkills(e) {
-        if (!isSkillsDragging) return;
-        
-        const currentPosition = e.type.includes('mouse') ? e.pageX : e.touches[0].clientX;
-        const diff = currentPosition - skillsStartPos;
-        
-        const containerWidth = skillsSlider.parentElement.offsetWidth;
-        const maxScroll = -(skillsSlider.scrollWidth - containerWidth);
-        
-        let newTranslate = skillsCurrentTranslate + diff;
-        newTranslate = Math.max(maxScroll, Math.min(0, newTranslate));
-        
-        skillsSlider.style.transform = `translateX(${newTranslate}px)`;
-    }
-
-    function dragEndSkills() {
-        isSkillsDragging = false;
-        skillsSlider.style.cursor = 'grab';
-        skillsSlider.style.transition = 'transform 0.3s ease-out';
-        
-        // Son pozisyonu kaydet
-        const transform = window.getComputedStyle(skillsSlider).transform;
-        currentSkillsPosition = transform !== 'none' ? parseInt(transform.split(',')[4]) : 0;
-        
-        // Navigasyon butonlarını güncelle
-        const containerWidth = skillsSlider.parentElement.offsetWidth;
-        const maxScroll = -(skillsSlider.scrollWidth - containerWidth);
-        
-        const prevButton = skillsSlider.parentElement.parentElement.querySelector('button[onclick="slideSkills(\'prev\')"]');
-        const nextButton = skillsSlider.parentElement.parentElement.querySelector('button[onclick="slideSkills(\'next\')"]');
-        
-        prevButton.style.opacity = currentSkillsPosition < 0 ? '1' : '0.5';
-        nextButton.style.opacity = currentSkillsPosition > maxScroll ? '1' : '0.5';
-    }
-
-    // Yetenekler için sürükleme olaylarını ekle
-    skillsSlider.addEventListener('mousedown', dragStartSkills);
-    skillsSlider.addEventListener('mousemove', dragMoveSkills);
-    skillsSlider.addEventListener('mouseup', dragEndSkills);
-    skillsSlider.addEventListener('mouseleave', dragEndSkills);
-
-    skillsSlider.addEventListener('touchstart', dragStartSkills);
-    skillsSlider.addEventListener('touchmove', dragMoveSkills);
-    skillsSlider.addEventListener('touchend', dragEndSkills);
-
-    // Sayfa yüklendiğinde yetenekler için
-    window.addEventListener('load', () => {
-        skillsSlider.style.cursor = 'grab';
-        slideSkills('next'); // Butonları güncellemek için
-    });
-
-    // Pencere yeniden boyutlandığında yetenekler için
-    window.addEventListener('resize', () => {
-        currentSkillsPosition = 0;
-        skillsSlider.style.transform = 'translateX(0)';
-        slideSkills('next');
-    });
-
-    // Yetenekler için context menu'yü engelle
-    skillsSlider.addEventListener('contextmenu', (e) => e.preventDefault());
-
-    // Stil eklemeleri
-    skillsSlider.style.userSelect = 'none';
-    skillsSlider.style.touchAction = 'pan-y pinch-zoom';
-    </script>
-
-    <style>
-    /* Sürüklenebilir slider için stil (hem projeler hem yetenekler için) */
-    #projectsSlider,
-    #skillsSlider {
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        touch-action: pan-y pinch-zoom;
-    }
-
-    @media (hover: hover) {
-        #projectsSlider:hover,
-        #skillsSlider:hover {
-            cursor: grab;
-        }
-        
-        #projectsSlider:active,
-        #skillsSlider:active {
-            cursor: grabbing;
-        }
-    }
-    </style>
-
-    <!-- Deneyimler bölümü için stil güncellemeleri -->
-    <style>
-    /* Timeline için responsive düzenlemeler */
-    .timeline-container {
-        @apply relative;
-    }
-
-    .timeline-line {
-        @apply absolute left-4 md:left-1/2 h-full w-0.5 bg-gradient-to-b from-blue-400 to-purple-500;
-        transform: translateX(-50%);
-    }
-
-    .timeline-item {
-        @apply relative flex flex-col md:flex-row items-start md:items-center gap-4 md:gap-8 mb-12;
-    }
-
-    .timeline-date {
-        @apply w-full md:w-1/2 text-left md:text-right pr-8 md:pr-12;
-    }
-
-    .timeline-content {
-        @apply w-full md:w-1/2 pl-8 md:pl-12 relative;
-    }
-
-    .timeline-dot {
-        @apply absolute left-4 md:left-0 top-1.5 w-3 h-3 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full;
-        transform: translateX(-50%);
-    }
-
-    /* Mobilde içerik düzenlemeleri */
-    @media (max-width: 767px) {
-        .timeline-date {
-            @apply text-sm font-semibold text-blue-400 mb-1;
-        }
-        
-        .timeline-content {
-            @apply border-l-2 border-blue-400/20;
-        }
-        
-        .timeline-dot {
-            @apply -left-1;
-        }
-    }
-    </style>
-
-    <!-- Deneyimler Bölümü için minimal responsive düzeltmeler -->
-    <style>
-    @media (max-width: 767px) {
-        .experience-card {
-            @apply flex-col !important;
-            margin-bottom: 2rem;
-        }
-        
-        .experience-date {
-            @apply w-full mb-4 !important;
-        }
-        
-        .experience-content {
-            @apply w-full !important;
-        }
-    }
-    </style>
-
-    <style>
-    /* Mobil için responsive düzenlemeler */
-    @media (max-width: 767px) {
-        /* Timeline çizgisi mobilde sola kaydır */
-        .max-w-5xl > .absolute {
-            left: 20px !important;
-        }
-        
-        /* Timeline noktaları mobilde sola kaydır */
-        .relative > .absolute {
-            left: 20px !important;
-        }
-        
-        /* Deneyim kartları mobilde düzenleme */
-        .relative.flex {
-            flex-direction: column;
-            align-items: flex-start;
-            padding-left: 40px;
-        }
-        
-        /* Tarih ve içerik genişlikleri */
-        .w-5/12 {
-            width: 100% !important;
-        }
-        
-        /* Sağ ve sol padding düzenlemeleri */
-        .pr-8, .pl-8 {
-            padding: 0 !important;
-        }
-        
-        /* Tarih kısmı düzenlemesi */
-        .text-right {
-            text-align: left !important;
-            margin-bottom: 1rem;
-        }
-    }
-    </style>
 </body>
+
 </html>
