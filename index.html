@@ -301,7 +301,7 @@
                             Feel free to get in touch for new projects and collaboration opportunities!
                         </p>
                     </div>
-                    <form action="#" method="POST" class="space-y-6">
+                    <form action="mailto:cihataydin.tr@gmail.com" method="POST" class="z-50 space-y-6">
                         <div>
                             <label for="name" class="block mb-2 text-sm font-medium text-stone-700 dark:text-stone-300">Name</label>
                             <input type="text" id="name" name="name" placeholder="Name Surname" required
@@ -457,12 +457,12 @@
                                             {
                                                 contactForm.addEventListener('submit', function (e)
                                                 {
-                                                    e.preventDefault();
-                                                    formStatus.textContent = 'Mesajınız gönderiliyor...';
+                                                    //e.preventDefault();
+                                                    formStatus.textContent = 'Sending your message...';
                                                     formStatus.className = 'text-sm text-center mt-4 text-emerald-600 dark:text-emerald-400';
                                                     setTimeout(() =>
                                                     {
-                                                        formStatus.textContent = 'Mesajınız başarıyla gönderildi!';
+                                                        formStatus.textContent = 'Your message has been sent successfully.';
                                                         formStatus.className = 'text-sm text-center mt-4 text-lime-600 dark:text-lime-400';
                                                         contactForm.reset();
                                                     }, 1500);
